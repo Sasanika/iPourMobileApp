@@ -85,11 +85,11 @@ const styles = StyleSheet.create({
     backgroundColor:'white',
   },
   text: {
-    fontSize: 55,
+    fontSize: 40,
     fontWeight: 'bold',
     textAlign: 'center',
     position: 'relative',
-    top:100,
+    top:110,
     color:'white',
   },
   circle: {
