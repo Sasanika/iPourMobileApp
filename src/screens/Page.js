@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { getDatabase, ref, push, set, update } from 'firebase/database'; // Import Firebase database functions
 import LottieView from 'lottie-react-native';
 import { db } from '../components/config.jsx';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const Card = ({ imageSource, title, onPress }) => (
     <TouchableOpacity style={styles.card} onPress={onPress}>
@@ -19,9 +20,9 @@ function addDrinkTemperature(temperatureValue) {
         return;
     }
     const temperatureRef = ref(db, '/users/kettle');
-    update(temperatureRef, { inputTemperature: parseInt(temperatureValue) }) // Updated to parse temperature as an integer
+    update(temperatureRef, { kettleAppInputTemp : parseInt(temperatureValue) }) // Updated to parse temperature as an integer
         .then(() => {
-            Alert.alert('Success', 'Temperature set successfully');
+            Alert.alert('Success', 'Your refreshing beverage is just moments away! We are boiling water to your perfection. ');
             // setTemperature(''); // This line seems unnecessary as setTemperature is not defined in the provided code
         })
         .catch((error) => {
@@ -33,115 +34,125 @@ function addDrinkTemperature(temperatureValue) {
 const Page = () => {
     const navigation = useNavigation();
 
+    function GoForm(){
+        navigation.reset({ index: 0, routes: [{ name: 'Form' }] });
+
+    }
+
+    function LearnMore(){
+        navigation.reset({ index: 0, routes: [{ name: 'LearnMorePage' }] });
+
+    }
+
 
     return (
-        
-        <SafeAreaView style={styles.container}>
-            <ScrollView style={styles.scrollView}>
-                
-                
-                <Image style={{width:130, height:110, position:'relative', right:0, margin:12,}} source={require('../images/premiumm.gif')} />
-                <TouchableOpacity style={{backgroundColor:'purple', padding:12,margin:5, width:'80%', borderRadius:15}}>
-                   <Text style={{color:'white', textAlign:'center', fontSize:20, fontWeight:'bold'}}>Upgrade</Text> 
-                </TouchableOpacity>
-                <Text style={styles.topic0}>Unlock Premium Features with iPour Plus.  
-                
-                </Text>
-                <Text style={{padding:5}}>Unlock a new level of precision and customization with iPour Plus, the premium upgrade for the iPour Mobile App. 
-                    Now, not only can you control the temperature of your water, but you can tailor it precisely to match your preferred
-                     beverages with unparalleled accuracy.
-                     <TouchableOpacity>
-                    <Text style={{padding: 0,
-        top: 0,
-        margin: 0,
-        position: 'relative',
-        color: 'purple',
-        fontWeight: 'bold',}}>Learn more</Text>
-                </TouchableOpacity>
-                     </Text>
+        <LinearGradient
+            colors={['#08C8F6', '#4D5DFB']}
+            style={styles.container}
+        >
+            <SafeAreaView style={styles.container}>
+                <ScrollView style={styles.scrollView}>
+                    <Image style={{width:130, height:110, position:'relative', right:0, margin:12,}} source={require('../images/premiumm.gif')} />
+                    <TouchableOpacity onPress={GoForm}>
+            <LinearGradient
+                colors={['#AD1DEB', '#6E72FC']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                style={styles.button}>
+                <Text style={styles.buttonText}>Upgrade</Text>
+            </LinearGradient>
+        </TouchableOpacity>
 
 
-                <Text style={styles.topic1}>Coffee</Text>
+                    <Text style={styles.topic0}>Unlock Premium Features with iPour Plus.</Text>
+                    <Text style={{padding:5, color:'white'}}>Unlock a new level of precision and customization with iPour Plus, the premium upgrade for the iPour Mobile App. Now, not only can you control the temperature of your water, but you can tailor it precisely to match your preferred beverages with unparalleled accuracy.
+                        <TouchableOpacity onPress={LearnMore}>
+                            <Text style={{padding: 0, top: 0, margin: 0, position: 'relative', color: 'purple', fontWeight: 'bold'}}>Learn more</Text>
+                        </TouchableOpacity>
+                    </Text>
 
-                <View style={styles.row}>
-                    <Card
-                        imageSource={require('../images/drip_coffee.jpg')}
-                        title="Drip Coffee"
-                        onPress={() => addDrinkTemperature( 93.3)}
-                    />
+                    <Text style={styles.topic1}>Coffee</Text>
 
-                    <Card
-                        imageSource={require('../images/espresso.jpg')}
-                        title="Espresso"
-                        onPress={() => addDrinkTemperature(90.6)}
-                    />
-                </View>
+                    <View style={styles.row}>
+                        <Card
+                            imageSource={require('../images/drip_coffee.jpg')}
+                            title="Drip Coffee"
+                            onPress={() => addDrinkTemperature( 93.3)}
+                        />
 
-                <Card
-                    imageSource={require('../images/french_press.jpg')}
-                    title="Frenchpress"
-                    onPress={() => addDrinkTemperature(93.3)}
-                />
-
-                <Text style={styles.topic1}>Tea</Text>
-
-                <View style={styles.row}>
-                    <Card
-                        imageSource={require('../images/green_tea.jpg')}
-                        title="Green Tea"
-                        onPress={() => addDrinkTemperature(82 )}
-                    />
+                        <Card
+                            imageSource={require('../images/espresso.jpg')}
+                            title="Espresso"
+                            onPress={() => addDrinkTemperature(90.6)}
+                        />
+                    </View>
 
                     <Card
-                        imageSource={require('../images/herbal_tea.jpg')}
-                        title="Herbal Tea"
-                        onPress={() => addDrinkTemperature(100)}
-                    />
-                </View>
-
-                <View style={styles.row}>
-                    <Card
-                        imageSource={require('../images/infusion_tea.jpg')}
-                        title="Infussion Tea(Fruits, Herbs)"
-                        onPress={() => addDrinkTemperature(100)}
+                        imageSource={require('../images/french_press.jpg')}
+                        title="Frenchpress"
+                        onPress={() => addDrinkTemperature(93.3)}
                     />
 
-                    <Card
-                        imageSource={require('../images/oolong_tea.jpg')}
-                        title="Oolong Tea"
-                        onPress={() => addDrinkTemperature(90.6)}
-                    />
-                </View>
+                    <Text style={styles.topic1}>Tea</Text>
 
-                <View style={styles.row}>
-                    <Card
-                        imageSource={require('../images/white_tea.jpg')}
-                        title="White Tea"
-                        onPress={() => addDrinkTemperature('White Tea', 79.4)}
-                    />
+                    <View style={styles.row}>
+                        <Card
+                            imageSource={require('../images/green_tea.jpg')}
+                            title="Green Tea"
+                            onPress={() => addDrinkTemperature(82 )}
+                        />
 
-                    <Card
-                        imageSource={require('../images/matcha.jpg')}
-                        title="Matcha"
-                        onPress={() =>addDrinkTemperature('Matcha', 75)}
-                    />
-                </View>
+                        <Card
+                            imageSource={require('../images/herbal_tea.jpg')}
+                            title="Herbal Tea"
+                            onPress={() => addDrinkTemperature(100)}
+                        />
+                    </View>
 
-                <View style={styles.row}>
-                    <Card
-                        imageSource={require('../images/chai_tea.jpg')}
-                        title="Chai"
-                        onPress={() => addDrinkTemperature('Chai', 100)}
-                    />
+                    <View style={styles.row}>
+                        <Card
+                            imageSource={require('../images/infusion_tea.jpg')}
+                            title="Infussion Tea(Fruits, Herbs)"
+                            onPress={() => addDrinkTemperature(100)}
+                        />
 
-                    <Card
-                        imageSource={require('../images/black_tea.jpg')}
-                        title="Black Tea"
-                        onPress={() => addDrinkTemperature('Black Tea', 97)}
-                    />
-                </View>
-            </ScrollView>
-        </SafeAreaView>
+                        <Card
+                            imageSource={require('../images/oolong_tea.jpg')}
+                            title="Oolong Tea"
+                            onPress={() => addDrinkTemperature(90.6)}
+                        />
+                    </View>
+
+                    <View style={styles.row}>
+                        <Card
+                            imageSource={require('../images/white_tea.jpg')}
+                            title="White Tea"
+                            onPress={() => addDrinkTemperature(79.4)}
+                        />
+
+                        <Card
+                            imageSource={require('../images/matcha.jpg')}
+                            title="Matcha"
+                            onPress={() =>addDrinkTemperature(75)}
+                        />
+                    </View>
+
+                    <View style={styles.row}>
+                        <Card
+                            imageSource={require('../images/chai_tea.jpg')}
+                            title="Chai"
+                            onPress={() => addDrinkTemperature(100)}
+                        />
+
+                        <Card
+                            imageSource={require('../images/black_tea.jpg')}
+                            title="Black Tea"
+                            onPress={() => addDrinkTemperature(97)}
+                        />
+                    </View>
+                </ScrollView>
+            </SafeAreaView>
+        </LinearGradient>
     );
 };
 
@@ -149,14 +160,12 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 8,
-        backgroundColor:'white',
         width: '100%',
-        height:'80%',
-        
+        height:'100%',
     },
     scrollView: {
         flex: 1,
-        backgroundColor:'white',
+        backgroundColor: 'transparent',
     },
     row: {
         flex: 1,
@@ -172,8 +181,6 @@ const styles = StyleSheet.create({
         position: 'relative',
         top: 0,
         padding:5,
-        
-
     },
     topic1:{
         fontSize: 20,
@@ -183,10 +190,33 @@ const styles = StyleSheet.create({
     },
     card: {
         width: '45%', // Adjust as needed to create two columns
-        backgroundColor: '#DCF0FA',
+        backgroundColor: 'rgba(255, 255, 255, 0.3)', // Transparent white background
         padding: 12,
         borderRadius: 10,
         alignItems: 'center',
+        borderWidth: 1,
+        borderColor: 'rgba(255, 255, 255, 0.5)', // Transparent white border
+        shadowColor: 'rgba(0, 0, 0, 0.3)', // Semi-transparent black shadow
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.5, // Semi-transparent shadow
+        shadowRadius: 3, // Spread of the shadow
+        elevation: 5, // Android only
+    },
+    button: {
+        paddingVertical: 12,
+        paddingHorizontal: 24,
+        borderRadius: 15,
+        elevation: 5,
+    },
+    buttonText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        color: 'white',
+        backgroundColor: 'transparent',
     },
     cardImage: {
         width: '100%',
@@ -199,6 +229,7 @@ const styles = StyleSheet.create({
         fontWeight: '300',
         marginBottom: 10,
     },
+   
 });
 
 export default Page;

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, TextInput, TouchableOpacity, Text, Switch, Alert, Image } from 'react-native';
-import { ref, update, onValue, set } from 'firebase/database';
+import { ref, update, onValue, get } from 'firebase/database';
 import { db } from '../components/config.jsx';
-import * as Animatable from 'react-native-animatable';
 
 
 export default function EnterTemp() {
@@ -11,7 +10,7 @@ export default function EnterTemp() {
   const [keepWarm, setKeepWarm] = useState(false); 
 
   useEffect(() => {
-    const keepWarmRef = ref(db, '/users/kettle/keepWarm');
+    const keepWarmRef = ref(db, '/users/kettle/kettleAppWarm');
     onValue(keepWarmRef, (snapshot) => {
       const data = snapshot.val();
       if (data !== null) {
@@ -19,28 +18,37 @@ export default function EnterTemp() {
       }
     });
   }, []);
-
+  
   const handleToggleWarm = async () => {
     try {
-      const kettleOnRef = ref(db, '/users/kettle/kettleOn');
-      onValue(kettleOnRef, (snapshot) => {
-        const kettleOnStatus = snapshot.val();
-        if (!kettleOnStatus) {
-          Alert.alert('Error', 'Cannot toggle Keep Warm when kettle is off');
-          return;
-        }
-        const newStatus = !keepWarm; // Toggle the status
-        update(ref(db, '/users/kettle'), { keepWarm: newStatus }); // Update Firebase with the new keepWarm status
-      });
+
+      const kettleAppOnRef = ref(db, '/users/kettle/kettleAppOn');
+    const snapshotKettleAppOn = await get(kettleAppOnRef);
+    const kettleAppOnStatus = snapshotKettleAppOn.val();
+
+    // If kettleAppOn is false, show an error message and return
+    if (!kettleAppOnStatus) {
+      Alert.alert('Error', 'Please turn on the kettle first');
+      return;
+    }
+      const keepWarmRef = ref(db, '/users/kettle/kettleAppWarm');
+      const snapshotWarm = await get(keepWarmRef);
+      const keepWarmStatus = snapshotWarm.val();
+  
+      // Toggle keepWarm based on its current value
+      const newKeepWarmStatus = !keepWarmStatus;
+  
+      // Update Firebase with the new keepWarm status
+      await update(ref(db, '/users/kettle'), { kettleAppWarm: newKeepWarmStatus });
     } catch (error) {
-      console.error('Error updating keep warm status:', error);
+      console.error('Error updating keepWarm status:', error);
       // Handle error as per your app's requirements
     }
   };
   
 
   useEffect(() => {
-    const kettleOnRef = ref(db, '/users/kettle/kettleOn');
+    const kettleOnRef = ref(db, '/users/kettle/kettleAppOn');
     onValue(kettleOnRef, (snapshot) => {
       const data = snapshot.val();
       if (data !== null) {
@@ -48,29 +56,51 @@ export default function EnterTemp() {
       }
     });
   }, []);
-
+  
   const handleToggle = async () => {
     try {
-      const newStatus = !kettleStatus; // Toggle the status
-      await update(ref(db, '/users/kettle'), { kettleOn: newStatus }); // Update Firebase with the new kettleOn status
-      
+      const kettleOnRef = ref(db, '/users/kettle/kettleAppOn');
+      const snapshot = await get(kettleOnRef);
+      const kettleOnStatus = snapshot.val();
+  
+      // Toggle kettleAppOn based on the current value of kettleOn
+      const newKettleAppOnStatus = !kettleOnStatus;
+  
+      // Update Firebase with the new kettleAppOn status
+      await update(ref(db, '/users/kettle'), { kettleAppOn: newKettleAppOnStatus });
     } catch (error) {
       console.error('Error updating kettle status:', error);
       // Handle error as per your app's requirements
     }
   };
   
+  
+  
+  
+  
+  
+  
   const [temperature, setTemperature] = useState('');
 
   const handleSetTemperature = () => {
-    if (temperature === '') {
-      Alert.alert('Error', 'Please enter a temperature');
+    const parsedTemperature = parseInt(temperature);
+  
+    // Check if the entered temperature is a valid number
+    if (isNaN(parsedTemperature)) {
+      Alert.alert('Error', 'Please enter a valid temperature');
       return;
     }
+  
+    // Check if the entered temperature is within the range of 40 to 100
+    if (parsedTemperature < 40 || parsedTemperature > 100) {
+      Alert.alert('Error', 'Please enter a temperature between 40°C and 100°C.');
+      return;
+    }
+  
     const temperatureRef = ref(db, '/users/kettle');
-    update(temperatureRef, { inputTemperature: parseInt(temperature) }) // Updated to parse temperature as an integer
+    update(temperatureRef, { kettleAppInputTemp: parsedTemperature })
       .then(() => {
-        Alert.alert('Success', 'Temperature set successfully');
+        Alert.alert('Success', 'Your water will reach the perfect temperature tailored to your preference.');
         setTemperature('');
       })
       .catch((error) => {
@@ -78,6 +108,7 @@ export default function EnterTemp() {
         Alert.alert('Error', 'Failed to set temperature');
       });
   };
+  
 
   return (
     <View style={styles.container}>

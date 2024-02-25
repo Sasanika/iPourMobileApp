@@ -1,8 +1,9 @@
 import { useNavigation } from "@react-navigation/native";
 import { Text, View, StyleSheet, TouchableOpacity, ScrollView, Linking } from "react-native";
 import { StatusBar } from 'expo-status-bar';
-import { AsyncStorage } from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+
 
 const AllFunctions = () => {
     const navigation = useNavigation();
@@ -46,7 +47,10 @@ const AllFunctions = () => {
                 
             </ScrollView>
             {/* FAQ Section */}
-            <TouchableOpacity onPress={logOut} style={styles.logoutButton}>
+            <TouchableOpacity
+    onPress={logOut}
+    style={styles.logoutButton}
+>
                 <Text style={{color:'#50B8E7', fontSize:18, borderWidth:2, padding:6, borderColor:'#50B8E7', borderRadius:8}}><MaterialCommunityIcons name="logout" size={24} color="#50B8E7" /> Logout</Text>
             </TouchableOpacity>
             <View style={styles.faqContainer}>
