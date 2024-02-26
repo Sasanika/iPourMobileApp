@@ -5,6 +5,7 @@ import LoginScreen from '../screens/LoginScreen'
 import OnBoarding from '../screens/OnBoarding'
 import Form from '../screens/Form'
 import LearnMorePage from '../screens/LearnMorePage'
+import HomePage from '../screens/HomePage'
 
 const AppNavigation = ({ initialRoute }) => {
     const Stack = createNativeStackNavigator()
@@ -17,6 +18,7 @@ const AppNavigation = ({ initialRoute }) => {
                 <Stack.Screen name="Form" component={Form} options={{ headerShown: false }}/>
                 <Stack.Screen name="LearnMorePage" component={LearnMorePage} options={{ headerShown: false }}/>
                 <Stack.Screen name="Home" component={HomeNavigation} options={{ headerShown: false }}/>
+                <Stack.Screen name="HomePage" component={HomePage} options={{ headerShown: false }} />
                 
             </Stack.Navigator>
         </NavigationContainer>

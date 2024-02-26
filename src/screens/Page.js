@@ -47,7 +47,7 @@ const Page = () => {
 
     return (
         <LinearGradient
-            colors={['#08C8F6', '#4D5DFB']}
+            colors={['#0077c0', '#abd8ea']}
             style={styles.container}
         >
             <SafeAreaView style={styles.container}>
@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
     },
     card: {
         width: '45%', // Adjust as needed to create two columns
-        backgroundColor: 'rgba(255, 255, 255, 0.3)', // Transparent white background
+        backgroundColor: 'rgba(255, 255, 255, 0.6)', // Transparent white background
         padding: 12,
         borderRadius: 10,
         alignItems: 'center',

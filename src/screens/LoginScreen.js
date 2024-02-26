@@ -35,7 +35,7 @@ const LoginScreen = () => {
                     storeCredentials(username, password);
 
                     // User authenticated successfully, navigate to Home.js
-                    navigation.reset({ index: 0, routes: [{ name: 'Home' }] });
+                    navigation.reset({ index: 0, routes: [{ name: 'HomePage' }] });
 
                     // Clear input fields
                     setUsername('');
@@ -66,7 +66,7 @@ const LoginScreen = () => {
     
             if (storedUsername && storedPassword) {
                 // User is already logged in, navigate to Home.js
-                navigation.reset({ index: 0, routes: [{ name: 'Home' }] });
+                navigation.reset({ index: 0, routes: [{ name: 'HomePage' }] });
             }
         } catch (error) {
             console.error('Error checking login status:', error);
