@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { ref, onValue } from "firebase/database";
 import { db } from '../components/config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const LoginScreen = () => {
     const navigation = useNavigation();
@@ -83,7 +84,8 @@ const LoginScreen = () => {
 <Image style={{width:250, height:250, position:'relative', top:-20, left:40}} source={require('../images/SmartKettle.png')} />
 
 
-            <View style={{height:'60%',width:'100%', backgroundColor:'white',alignItems: 'center',
+<LinearGradient
+            colors={['#0077c0', 'white']} style={{height:'60%',width:'100%', backgroundColor:'white',alignItems: 'center',
         justifyContent: 'center',position:'absolute', top:350, borderRadius:40}}>
             
             {authenticationError ? <Text style={styles.errorText}>{authenticationError}</Text> : null}
@@ -118,7 +120,7 @@ const LoginScreen = () => {
             </Text>
 
             <StatusBar style="auto" />
-            </View>
+            </LinearGradient>
         </View>
     );
 };

@@ -6,7 +6,6 @@ import Page from '../screens/Page';
 import AllFunctions from '../screens/AllFunctions';
 import ShowTemp from '../screens/ShowTemp';
 import EnterTemp from '../screens/EnterTemp';
-import HomePage from '../screens/HomePage';
 
 const HomeNavigation = () => {
     const Tab = createBottomTabNavigator();

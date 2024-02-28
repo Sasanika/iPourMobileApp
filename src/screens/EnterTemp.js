@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, TextInput, TouchableOpacity, Text, Switch, Alert, Image } from 'react-native';
 import { ref, update, onValue, get } from 'firebase/database';
 import { db } from '../components/config.jsx';
+import { LinearGradient } from 'expo-linear-gradient';
+
 
 
 export default function EnterTemp() {
@@ -112,18 +114,20 @@ export default function EnterTemp() {
 
   return (
     <View style={styles.container}>
-      <View style={{ position: 'relative', width: '100%', height: '50%', top: -200 }}>
-  <Image style={{ width: '100%', height: '100%' }} source={require('../images/enterTempBackground.jpg')} />
+      <View style={{flex:1, position: 'relative', width: '100%', height: '50%', top: -200 }}>
+  <Image style={{ width: '100%', height: '100%' }} source={require('../images/pxfuel.jpg')} />
   <View style={{ position: 'absolute', top: '50%', left: '50%', transform: [{ translateX: -190 }, { translateY: -50 }] }}>
-    <View style={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', paddingHorizontal: 10, paddingVertical: 5, borderRadius: 10 }}>
-      <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'black', textAlign: 'center' }}>Precision Control for Your Perfect Brew</Text>
-    </View>
+   
   </View>
 </View>
+<LinearGradient
+            colors={['#0077c0', '#abd8ea']}
+            style={{height:'80%',width:'100%',alignItems: 'center',
+        justifyContent: 'center',position:'absolute', top:200, borderRadius:40}}
+        >
 
-
-      <View style={{height:'80%',width:'100%', backgroundColor:'white',alignItems: 'center',
-        justifyContent: 'center',position:'absolute', top:200, borderRadius:40}}>
+      <View style={{height:'80%',width:'100%',alignItems: 'center',
+        justifyContent: 'center',position:'absolute',top:20, borderRadius:40}}>
 
 
 
@@ -139,34 +143,56 @@ export default function EnterTemp() {
       <TouchableOpacity style={styles.button} onPress={handleSetTemperature}>
         <Text style={styles.buttonText}>Set</Text>
       </TouchableOpacity>
-      <View style={{ flexDirection: 'row', backgroundColor: '#DCF0FA', padding: 12, borderRadius: 10, width: '90%', margin: 15, alignItems: 'center' }}>
-  <Text style={{ flex: 1, fontWeight: 'bold', color: '#50B8E7', paddingLeft: 20, fontSize:20 }}>On/Off</Text>
+      <View style={{ 
+        flexDirection: 'row',
+        backgroundColor: 'transparent',
+        borderColor: 'white', // Transparent white border
+        paddingLeft: 12,
+        paddingRight: 12,
+        borderRadius: 10,
+        borderWidth:1,
+        width: '90%',
+        margin:10
+      }}>
+  <Text style={{ flex: 1, fontWeight: 'bold', color: 'white', paddingHorizontal: 20,paddingVertical:30, fontSize:20 }}>On/Off</Text>
   <Image
     source={require('../images/kettleOnOff.gif')}
     style={{ width: 100, height: 100., marginRight: 20  }}
   />
   <Switch
     value={kettleStatus}
+    thumbColor={kettleStatus ? '#0077c0' : 'white'}
     onValueChange={handleToggle}
-    style={{ transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }] }}
+    style={{ transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }],marginHorizontal:10 }}
   />
 </View>
 
 
-<View style={{ flexDirection: 'row', backgroundColor: '#DCF0FA', paddingLeft: 12, paddingRight: 12, borderRadius: 10, width: '90%' }}>
-  <Text style={{ flex: 1, paddingTop: 30, paddingLeft: 1, fontWeight: 'bold', color: '#50B8E7', fontSize:20 }}>Hot Mode</Text>
+<View style={{
+    flexDirection: 'row',
+    backgroundColor: 'transparent',
+    borderColor: 'white', // Transparent white border
+    paddingLeft: 12,
+    paddingRight: 12,
+    borderRadius: 10,
+    borderWidth:1,
+    width: '90%'
+}}>
+  <Text style={{ flex: 1,  paddingHorizontal: 20,paddingVertical:30, fontWeight: 'bold', color: 'white', fontSize:20 }}>Hot Mode</Text>
   <Image
     source={require('../images/hotMode.gif')}
     style={{ width: 100, height: 100, marginRight: 20  }}
   />
   <Switch
     value={keepWarm}
+    thumbColor={keepWarm ? '#0077c0' : 'white'}
     onValueChange={handleToggleWarm}
-    style={{ transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }] }}
+    style={{ transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }] , marginHorizontal:10}}
   />
 </View>
 
       </View>
+      </LinearGradient>
     </View>
   );
 }
@@ -184,7 +210,9 @@ const styles = StyleSheet.create({
         padding: 18,        
         borderRadius: 10,
         margin: 15,
-        backgroundColor: '#DCF0FA',
+        backgroundColor: 'transparent',
+        borderColor: 'white',
+        borderWidth: 1,
   },
   button: {
     backgroundColor: '#50B8E7',

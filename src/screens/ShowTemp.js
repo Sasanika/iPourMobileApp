@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Alert, Image } from 'react-native';
-import { ref, onValue, off } from "firebase/database";
+import { View, Text, StyleSheet, Alert, ImageBackground, TouchableOpacity } from 'react-native';
+import { ref, onValue, off, get } from "firebase/database";
 import { db } from '../components/config.jsx';
 import { Audio } from 'expo-av';
 import { Asset } from 'expo-asset';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const ShowTemp = () => {
   const [data, setData] = useState(null);
   const [alertShown, setAlertShown] = useState(false);
+  const [soundObject, setSoundObject] = useState(null);
 
   useEffect(() => {
     // Set up Firebase Realtime Database reference
@@ -15,7 +17,7 @@ const ShowTemp = () => {
 
     // Subscribe to changes in the data
     const unsubscribe = onValue(dataRef, (snapshot) => {
-      const newData = snapshot.val();
+      const newData = parseInt(snapshot.val());
       setData(newData);
       checkTemperatureEquality(newData);
     });
@@ -28,22 +30,30 @@ const ShowTemp = () => {
 
   const ringtoneUri = Asset.fromModule(require('../images/ringtone.mp3')).uri;
 
-  const checkTemperatureEquality = (newData) => {
-    if (newData && newData.inputTemperature <= newData.currentTemperature && !alertShown) {
-      playRingtone();
-      showAlert();
-      setAlertShown(true);
+  const checkTemperatureEquality = async (newData) => {
+    try {
+      const currentTempSnapshot = await get(ref(db, '/users/kettle/currentTemperature'));
+      const inputTempSnapshot = await get(ref(db, '/users/kettle/kettleAppInputTemp'));
+      const currentTemp = currentTempSnapshot.val();
+      const inputTemp = inputTempSnapshot.val();
+
+      if (currentTemp !== null && inputTemp !== null && currentTemp === inputTemp && !alertShown) {
+        const sound = new Audio.Sound();
+        await sound.loadAsync({ uri: ringtoneUri });
+        await sound.playAsync();
+        setSoundObject(sound);
+        showAlert();
+        setAlertShown(true);
+      }
+    } catch (error) {
+      console.error('Error checking temperature equality:', error);
     }
   };
 
-  const playRingtone = async () => {
-    const soundObject = new Audio.Sound();
-
-    try {
-      await soundObject.loadAsync({ uri: ringtoneUri });
-      await soundObject.playAsync();
-    } catch (error) {
-      console.error('Failed to load the sound', error);
+  const stopRingtone = async () => {
+    if (soundObject !== null) {
+      await soundObject.stopAsync();
+      setAlertShown(false);
     }
   };
 
@@ -59,21 +69,24 @@ const ShowTemp = () => {
   };
 
   return (
-    <View style={styles.container}>
-      
+    <LinearGradient
+      colors={['#0077c0','white', '#abd8ea','#0077c0']}
+      style={styles.container}
+    >
+      <View style={styles.container}>
+        <ImageBackground source={require('../images/drop.png')} style={styles.backgroundImage}>
+          <Text style={styles.text}>{data} °C</Text>
+        </ImageBackground>
 
-      <View style={styles.circle}>
-      <Text style={styles.text}>{data} °C</Text>
-      
+        <Text style={styles.temperatureText}>Current Temperature of the Kettle</Text>
+
+        {alertShown && (
+          <TouchableOpacity style={styles.stopButton} onPress={stopRingtone}>
+            <Text style={styles.buttonText}>Stop Ringing</Text>
+          </TouchableOpacity>
+        )}
       </View>
-      <Text style={{padding:20, color:'#50B8E7', fontWeight:'bold', fontSize:15, position:'relative', top:100}}>Current Temperature of the kettle</Text>
-
-
-      <Image
-        source={require('../images/water.jpg')} // Replace './your-gif-file.gif' with the path to your GIF file
-        style={{ width: "100%", height: 300, position:'relative', top:130 }} // Adjust the width and height as needed
-      />
-    </View>
+    </LinearGradient>
   );
 };
 
@@ -82,23 +95,39 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor:'white',
   },
   text: {
     fontSize: 40,
     fontWeight: 'bold',
     textAlign: 'center',
-    position: 'relative',
-    top:110,
-    color:'white',
+    color: 'white',
   },
-  circle: {
-    width: 280,  // Adjust width as needed
-    height: 280, // Adjust height as needed
-    borderRadius: 140, // Half of the width and height to make it a full circle
-    backgroundColor: '#50B8E7', 
-    position:'relative',
-     top:100// Example background color
+  backgroundImage: {
+    width: 280,
+    height: 350,
+    borderRadius: 140,
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
+  },
+  temperatureText: {
+    marginTop: 20,
+    fontSize: 20,
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  stopButton: {
+    backgroundColor: 'red',
+    borderRadius: 10,
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    marginTop: 20,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 });
 

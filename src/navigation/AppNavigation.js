@@ -6,6 +6,7 @@ import OnBoarding from '../screens/OnBoarding'
 import Form from '../screens/Form'
 import LearnMorePage from '../screens/LearnMorePage'
 import HomePage from '../screens/HomePage'
+import Page from '../screens/Page'
 
 const AppNavigation = ({ initialRoute }) => {
     const Stack = createNativeStackNavigator()

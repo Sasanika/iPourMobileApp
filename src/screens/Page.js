@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
     topic0:{
         fontSize: 20,
         fontWeight: '500',
-        color:'#50B8E7',
+        color:'white',
         width: '90%',
         position: 'relative',
         top: 0,
@@ -190,20 +190,13 @@ const styles = StyleSheet.create({
     },
     card: {
         width: '45%', // Adjust as needed to create two columns
-        backgroundColor: 'rgba(255, 255, 255, 0.6)', // Transparent white background
+        backgroundColor: 'transparent', // Transparent white background
         padding: 12,
         borderRadius: 10,
         alignItems: 'center',
         borderWidth: 1,
-        borderColor: 'rgba(255, 255, 255, 0.5)', // Transparent white border
-        shadowColor: 'rgba(0, 0, 0, 0.3)', // Semi-transparent black shadow
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.5, // Semi-transparent shadow
-        shadowRadius: 3, // Spread of the shadow
-        elevation: 5, // Android only
+        borderColor:'white',
+         // Android only
     },
     button: {
         paddingVertical: 12,
