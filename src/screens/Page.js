@@ -1,9 +1,8 @@
 import React from 'react';
 import { useNavigation } from "@react-navigation/native";
-import { Text, Button, View, StyleSheet, ScrollView, TouchableOpacity, Image, Alert } from "react-native"; // Import Alert from react-native
+import { Text, Linking, View, StyleSheet, ScrollView, TouchableOpacity, Image, Alert } from "react-native"; 
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { getDatabase, ref, push, set, update } from 'firebase/database'; // Import Firebase database functions
-import LottieView from 'lottie-react-native';
+import { ref, update } from 'firebase/database'; 
 import { db } from '../components/config.jsx';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -23,7 +22,6 @@ function addDrinkTemperature(temperatureValue) {
     update(temperatureRef, { kettleAppInputTemp : parseInt(temperatureValue) }) // Updated to parse temperature as an integer
         .then(() => {
             Alert.alert('Success', 'Your refreshing beverage is just moments away! We are boiling water to your perfection. ');
-            // setTemperature(''); // This line seems unnecessary as setTemperature is not defined in the provided code
         })
         .catch((error) => {
             console.error('Error setting temperature: ', error);
@@ -32,16 +30,13 @@ function addDrinkTemperature(temperatureValue) {
 }
 
 const Page = () => {
-    const navigation = useNavigation();
 
     function GoForm(){
-        navigation.reset({ index: 0, routes: [{ name: 'Form' }] });
-
+        Linking.openURL('https://forms.gle/yWD4Sjc6RXoPmo9YA');
     }
 
     function LearnMore(){
-        navigation.reset({ index: 0, routes: [{ name: 'LearnMorePage' }] });
-
+        Linking.openURL('https://forms.gle/yWD4Sjc6RXoPmo9YA');
     }
 
 
@@ -150,13 +145,104 @@ const Page = () => {
                             onPress={() => addDrinkTemperature(97)}
                         />
                     </View>
+                    <Image source={require('../images/waterDrop.png')} style={styles.topLeftImage1} />
+            <Image source={require('../images/waterDrop.png')} style={styles.topLeftImage2} />
+            <Image source={require('../images/waterDrop.png')} style={styles.topLeftImage3} />
+            <Image source={require('../images/waterDrop.png')} style={styles.topLeftImage4} />
+            {/* Bottom right images */}
+            <Image source={require('../images/waterDrop.png')} style={styles.bottomRightImage1} />
+            <Image source={require('../images/waterDrop.png')} style={styles.bottomRightImage2} />
+            <Image source={require('../images/waterDrop.png')} style={styles.bottomRightImage3} />
+            <Image source={require('../images/waterDrop.png')} style={styles.bottomRightImage4} />
+            <Image source={require('../images/waterDrop.png')} style={styles.bottomRightImage5} />
+            <Image source={require('../images/waterDrop.png')} style={styles.bottomRightImage6} />
+            <Image source={require('../images/waterDrop.png')} style={styles.bottomRightImage7} />
+
                 </ScrollView>
             </SafeAreaView>
+            
         </LinearGradient>
     );
 };
 
 const styles = StyleSheet.create({
+    topLeftImage1: {
+        position: 'absolute',
+        top: 150,
+        left: 100,
+        width: 60,
+        height: 60,
+    },
+    topLeftImage2: {
+        position: 'absolute',
+        top: 10,
+        left: 250,
+        width: 40,
+        height: 40,
+    },
+    topLeftImage4: {
+        position: 'absolute',
+        top: 10,
+        left: 150,
+        width: 100,
+        height: 100,
+    },
+    topLeftImage3: {
+        position: 'absolute',
+        top: 20,
+        left: 20,
+        width: 50,
+        height: 50,
+    },
+    bottomRightImage1: {
+        position: 'absolute',
+        bottom: 250,
+        right: 100,
+        width: 100,
+        height: 100,
+    },
+    bottomRightImage2: {
+        position: 'absolute',
+        bottom: 200,
+        right: 150,
+        width: 60,
+        height: 60,
+    },
+    bottomRightImage3: {
+        position: 'absolute',
+        bottom: 480,
+        right: 180,
+        width: 70,
+        height: 70,
+    },
+    bottomRightImage4: {
+        position: 'absolute',
+        bottom: 550,
+        right: 200,
+        width: 50,
+        height: 50,
+    },
+    bottomRightImage7: {
+        position: 'absolute',
+        bottom: 1300,
+        right: 80,
+        width: 80,
+        height: 80,
+    },
+    bottomRightImage5: {
+        position: 'absolute',
+        bottom: 1100,
+        right: 80,
+        width: 100,
+        height: 100,
+    },
+    bottomRightImage6: {
+        position: 'absolute',
+        bottom: 1200,
+        right: 80,
+        width: 50,
+        height: 50,
+    },
     container: {
         flex: 1,
         padding: 8,
@@ -187,10 +273,11 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 15,
         marginTop: 20,
+        color:'white',
     },
     card: {
-        width: '45%', // Adjust as needed to create two columns
-        backgroundColor: 'transparent', // Transparent white background
+        width: '45%', 
+        backgroundColor: 'transparent', 
         padding: 12,
         borderRadius: 10,
         alignItems: 'center',
@@ -221,6 +308,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '300',
         marginBottom: 10,
+        color: 'white',
     },
    
 });

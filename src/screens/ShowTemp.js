@@ -12,31 +12,30 @@ const ShowTemp = () => {
   const [soundObject, setSoundObject] = useState(null);
 
   useEffect(() => {
-    // Set up Firebase Realtime Database reference
-    const dataRef = ref(db, '/users/kettle/currentTemperature');
+    const dataRef = ref(db, '/users/kettle');
 
-    // Subscribe to changes in the data
     const unsubscribe = onValue(dataRef, (snapshot) => {
-      const newData = parseInt(snapshot.val());
-      setData(newData);
-      checkTemperatureEquality(newData);
+      const data = snapshot.val();
+      if (data && 'currentTemperature' in data && 'kettleAppInputTemp' in data) {
+        const { currentTemperature, kettleAppInputTemp } = data;
+        const currentTempInt = parseInt(currentTemperature);
+        const inputTempInt = parseInt(kettleAppInputTemp);
+        setData(currentTempInt);
+        checkTemperatureEquality(currentTempInt, inputTempInt);
+      }
     });
 
-    // Unsubscribe from the data when the component unmounts
     return () => {
       off(dataRef, 'value', unsubscribe);
     };
   }, []);
 
+
+
   const ringtoneUri = Asset.fromModule(require('../images/ringtone.mp3')).uri;
 
-  const checkTemperatureEquality = async (newData) => {
+  const checkTemperatureEquality = async (currentTemp, inputTemp) => {
     try {
-      const currentTempSnapshot = await get(ref(db, '/users/kettle/currentTemperature'));
-      const inputTempSnapshot = await get(ref(db, '/users/kettle/kettleAppInputTemp'));
-      const currentTemp = currentTempSnapshot.val();
-      const inputTemp = inputTempSnapshot.val();
-
       if (currentTemp !== null && inputTemp !== null && currentTemp === inputTemp && !alertShown) {
         const sound = new Audio.Sound();
         await sound.loadAsync({ uri: ringtoneUri });
@@ -59,8 +58,8 @@ const ShowTemp = () => {
 
   const showAlert = () => {
     Alert.alert(
-      'Temperature Equality Alert',
-      'The input temperature is equal to or greater than the current temperature!',
+      'Water Temperature Alert',
+      'The water temperature has reached the desired level. You can now enjoy your hot beverage!',
       [
         { text: 'OK', onPress: () => console.log('OK Pressed') }
       ],
@@ -117,14 +116,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   stopButton: {
-    backgroundColor: 'red',
+    backgroundColor: 'white',
     borderRadius: 10,
     paddingVertical: 15,
     paddingHorizontal: 20,
     marginTop: 20,
   },
   buttonText: {
-    color: 'white',
+    color: 'black',
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center',

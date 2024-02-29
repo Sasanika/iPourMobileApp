@@ -1,18 +1,37 @@
-import React from 'react'
-import { View, Image, ImageBackground } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import React from 'react';
+import { View, Image, ImageBackground, StyleSheet } from 'react-native';
 
 const SplashScreen = () => {
     return (
-        <LinearGradient
-            colors={['#0077c0', '#abd8ea']}
-            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+        <ImageBackground 
+            source={require('../images/pxfuel.jpg')}
+            style={styles.container}
         >
-                <Image style={{ width: 120, height: 100 ,position:'relative', top:'10%'}} source={require('../images/iPourLogo.png')} />
-                <Image source={require('../images/teaCups.png')} style={{ width: '80%', height: '30%', justifyContent: 'center', alignItems: 'center',position:'relative', bottom:-200 }}/>
-
-        </LinearGradient>
-    )
+            <View style={styles.logoContainer}>
+                <Image 
+                    style={styles.logo}
+                    source={require('../images/iPourLogo.png')} 
+                />
+            </View>
+        </ImageBackground>
+    );
 }
 
-export default SplashScreen
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    logoContainer: {
+        position: 'absolute',
+        top: '40%',
+        alignItems: 'center'
+    },
+    logo: {
+        width: 120,
+        height: 100
+    }
+});
+
+export default SplashScreen;

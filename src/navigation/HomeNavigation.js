@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { AntDesign, FontAwesome5, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'; // Updated icon imports
+import { AntDesign, FontAwesome5, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'; 
 import Page from '../screens/Page';
 import AllFunctions from '../screens/AllFunctions';
 import ShowTemp from '../screens/ShowTemp';
@@ -16,14 +16,14 @@ const HomeNavigation = () => {
                 screenOptions={({ route }) => ({
                     headerShown: false,
                     tabBarStyle: {
-                        backgroundColor: 'rgba(23,143,215, 0.5)', // Set background color to transparent
-                        borderTopWidth: 0, // Hide top border
-                        position: 'absolute', // Position absolutely to fill the container
+                        backgroundColor: 'rgba(23,143,215, 0.5)', 
+                        borderTopWidth: 0, 
+                        position: 'absolute', 
                         left: 0,
                         right: 0,
                         bottom: 0,
-                        height: 60, // Set the height of the tab bar
-                        elevation: 0, // Remove shadow on Android
+                        height: 60, 
+                        elevation: 0, 
                     },
                     tabBarIcon: ({ focused }) => {
                         let iconName;

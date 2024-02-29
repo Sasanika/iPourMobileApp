@@ -72,7 +72,7 @@ export default function EnterTemp() {
       await update(ref(db, '/users/kettle'), { kettleAppOn: newKettleAppOnStatus });
     } catch (error) {
       console.error('Error updating kettle status:', error);
-      // Handle error as per your app's requirements
+      // Handle error as per app's requirements
     }
   };
   
@@ -136,6 +136,7 @@ export default function EnterTemp() {
       <TextInput
         style={styles.input}
         placeholder="Enter temperature"
+        placeholderTextColor="white"
         keyboardType="numeric"
         value={temperature}
         onChangeText={(text) => setTemperature(text)}
@@ -171,7 +172,7 @@ export default function EnterTemp() {
 <View style={{
     flexDirection: 'row',
     backgroundColor: 'transparent',
-    borderColor: 'white', // Transparent white border
+    borderColor: 'white', 
     paddingLeft: 12,
     paddingRight: 12,
     borderRadius: 10,
@@ -192,12 +193,55 @@ export default function EnterTemp() {
 </View>
 
       </View>
+      <Image source={require('../images/waterDrop.png')} style={styles.topLeftImage1} />
+            <Image source={require('../images/waterDrop.png')} style={styles.topLeftImage2} />
+
+            {/* Bottom right images */}
+            <Image source={require('../images/waterDrop.png')} style={styles.bottomRightImage1} />
+            <Image source={require('../images/waterDrop.png')} style={styles.bottomRightImage2} />
+            <Image source={require('../images/waterDrop.png')} style={styles.bottomRightImage3} />
+
       </LinearGradient>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  topLeftImage1: {
+    position: 'absolute',
+    top: 50,
+    left: 100,
+    width: 60,
+    height: 60,
+},
+topLeftImage2: {
+    position: 'absolute',
+    top: 10,
+    left: 20,
+    width: 100,
+    height: 100,
+},
+bottomRightImage1: {
+    position: 'absolute',
+    bottom: 100,
+    right: 30,
+    width: 110,
+    height: 110,
+},
+bottomRightImage2: {
+    position: 'absolute',
+    bottom: 90,
+    right: 180,
+    width: 60,
+    height: 60,
+},
+bottomRightImage3: {
+    position: 'absolute',
+    bottom: 140,
+    right: 150,
+    width: 50,
+    height: 50,
+},
   container: {
     flex: 1,
     alignItems: 'center',
@@ -206,10 +250,11 @@ const styles = StyleSheet.create({
   },
   input: {
     width: '90%',
+
         fontSize: 20,
-        padding: 18,        
+        padding: 15,        
         borderRadius: 10,
-        margin: 15,
+        margin: 5,
         backgroundColor: 'transparent',
         borderColor: 'white',
         borderWidth: 1,

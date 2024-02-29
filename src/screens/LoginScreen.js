@@ -80,47 +80,55 @@ const LoginScreen = () => {
 
     return (
         <View style={styles.container}>
-<Image style={{width:130, height:110, position:'relative', top:170, left:220}} source={require('../images/iPourLogo.png')} />
-<Image style={{width:250, height:250, position:'relative', top:-20, left:40}} source={require('../images/SmartKettle.png')} />
-
-
-<LinearGradient
-            colors={['#0077c0', 'white']} style={{height:'60%',width:'100%', backgroundColor:'white',alignItems: 'center',
-        justifyContent: 'center',position:'absolute', top:350, borderRadius:40}}>
             
-            {authenticationError ? <Text style={styles.errorText}>{authenticationError}</Text> : null}
+                <LinearGradient
+                    colors={['#0077c0', 'white']}
+                    style={styles.gradient}
+                >
+                    <View style={styles.card}>
+                        {authenticationError ? <Text style={styles.errorText}>{authenticationError}</Text> : null}
 
-            <Text style={{fontSize:20, position:'relative',top:-40, fontWeight:'500', color: '#50B8E7'}}>Sign In</Text>
+                        <Text style={styles.title}>Welcome Back !</Text>
 
-            <TextInput
-                value={username}
-                onChangeText={(text) => setUsername(text)}
-                placeholder="Username"
-                placeholderTextColor="#50B8E7"
-                style={styles.textBoxes}
-            />
+                        <TextInput
+                            value={username}
+                            onChangeText={(text) => setUsername(text)}
+                            placeholder="Username"
+                            placeholderTextColor="white"
+                            style={styles.textBoxes}
+                        />
 
-            <TextInput
-                value={password}
-                onChangeText={(text) => setPassword(text)}
-                placeholder="Password"
-                placeholderTextColor="#50B8E7"
-                secureTextEntry={true}
-                style={styles.textBoxes}
-            />
+                        <TextInput
+                            value={password}
+                            onChangeText={(text) => setPassword(text)}
+                            placeholder="Password"
+                            placeholderTextColor="white"
+                            secureTextEntry={true}
+                            style={styles.textBoxes}
+                        />
 
-            <TouchableOpacity style={styles.button} onPress={signIn}>
-                <Text style={styles.buttonText}>Sign In</Text>
-            </TouchableOpacity>
+                        <TouchableOpacity style={styles.button} onPress={signIn}>
+                            <Text style={styles.buttonText}>Sign In</Text>
+                        </TouchableOpacity>
 
-            <Text>New User? 
-                <TouchableOpacity onPress={turnLogin}>
-                    <Text style={styles.signupText}>Sign up</Text>
-                </TouchableOpacity>
-            </Text>
+                        <Text style={{color:'white'}}>New User? 
+                            <TouchableOpacity onPress={turnLogin}>
+                                <Text style={styles.signupText}>Sign up</Text>
+                            </TouchableOpacity>
+                        </Text>
+                    </View>
+                </LinearGradient>
+           
+            {/* Top left images */}
+            <Image source={require('../images/waterDrop.png')} style={styles.topLeftImage1} />
+            <Image source={require('../images/waterDrop.png')} style={styles.topLeftImage2} />
+
+            {/* Bottom right images */}
+            <Image source={require('../images/waterDrop.png')} style={styles.bottomRightImage1} />
+            <Image source={require('../images/waterDrop.png')} style={styles.bottomRightImage2} />
+            <Image source={require('../images/waterDrop.png')} style={styles.bottomRightImage3} />
 
             <StatusBar style="auto" />
-            </LinearGradient>
         </View>
     );
 };
@@ -130,18 +138,42 @@ export default LoginScreen;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#50B8E7',
-
-        
-
+    },
+   
+    gradient: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+    },
+    card: {
+        backgroundColor: 'transparent',
+        padding: 20,
+        borderRadius: 10,
+        width: '90%',
+        alignItems: 'center',
+        borderColor:'white',
+        borderWidth: 1,
+    },
+    title: {
+        fontSize: 30,
+        fontWeight: '500',
+        color: 'white',
+        marginBottom: 20,
     },
     textBoxes: {
         width: '90%',
         fontSize: 20,
-        padding: 15,        
+        padding: 15,
         borderRadius: 10,
         margin: 15,
-        backgroundColor: '#DCF0FA',
+        backgroundColor: 'transparent',
+        borderColor:'white',
+        borderWidth: 1,
     },
     button: {
         backgroundColor: '#50B8E7',
@@ -158,7 +190,8 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: '#fff',
-        fontSize: 16,
+        fontSize: 20,
+        fontWeight: 'bold',
         textAlign: 'center',
     },
     signupText: {
@@ -170,7 +203,42 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     errorText: {
-        color: 'red',
-        marginBottom: -20,
-    }
+        color: 'white',
+        marginBottom: 20,
+    },
+    topLeftImage1: {
+        position: 'absolute',
+        top: 150,
+        left: 100,
+        width: 60,
+        height: 60,
+    },
+    topLeftImage2: {
+        position: 'absolute',
+        top: 80,
+        left: 20,
+        width: 100,
+        height: 100,
+    },
+    bottomRightImage1: {
+        position: 'absolute',
+        bottom: 100,
+        right: 30,
+        width: 110,
+        height: 110,
+    },
+    bottomRightImage2: {
+        position: 'absolute',
+        bottom: 200,
+        right: 10,
+        width: 60,
+        height: 60,
+    },
+    bottomRightImage3: {
+        position: 'absolute',
+        bottom: 180,
+        right: 80,
+        width: 50,
+        height: 50,
+    },
 });

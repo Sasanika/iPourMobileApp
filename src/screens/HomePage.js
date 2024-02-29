@@ -15,7 +15,7 @@ const HomePage = () => {
     }
     return (
         <ImageBackground
-            source={require('../images/pxfuel.jpg')} // Replace with your background image path
+            source={require('../images/pxfuel.jpg')} 
             style={styles.background}
         >
             <View style={styles.container}>
@@ -23,7 +23,7 @@ const HomePage = () => {
                 
                 <TouchableOpacity onPress={goDashboard}>
             <LinearGradient
-                colors={['#0077c0', 'blue']}
+                colors={['white', 'white']}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 0 }}
                 style={styles.button}>
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
         flex: 1,
         position: 'relative',
         top:'40%',
-        justifyContent: 'flex-end', // Align cards at the bottom of the screen
+        justifyContent: 'flex-end', 
     },
     scrollViewContent: {
         paddingHorizontal: 15,
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         textAlign: 'center',
-        color: 'white',
+        color: 'black',
         backgroundColor: 'transparent',
     },
     card: {
