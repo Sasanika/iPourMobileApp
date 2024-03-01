@@ -21,7 +21,7 @@ function addDrinkTemperature(temperatureValue) {
     const temperatureRef = ref(db, '/users/kettle');
     update(temperatureRef, { kettleAppInputTemp : parseInt(temperatureValue) }) // Updated to parse temperature as an integer
         .then(() => {
-            Alert.alert('Success', 'Your refreshing beverage is just moments away! We are boiling water to your perfection. ');
+            Alert.alert('Success', 'Your refreshing beverage is just moments away! Now turn on the kettle.');
         })
         .catch((error) => {
             console.error('Error setting temperature: ', error);
@@ -82,12 +82,7 @@ const Page = () => {
                         />
                     </View>
 
-                    <Card
-                        imageSource={require('../images/french_press.jpg')}
-                        title="Frenchpress"
-                        onPress={() => addDrinkTemperature(93.3)}
-                    />
-
+                   
                     <Text style={styles.topic1}>Tea</Text>
 
                     <View style={styles.row}>
@@ -225,21 +220,21 @@ const styles = StyleSheet.create({
     bottomRightImage7: {
         position: 'absolute',
         bottom: 1300,
-        right: 80,
+        right: 20,
         width: 80,
         height: 80,
     },
     bottomRightImage5: {
         position: 'absolute',
         bottom: 1100,
-        right: 80,
+        right: 10,
         width: 100,
         height: 100,
     },
     bottomRightImage6: {
         position: 'absolute',
         bottom: 1200,
-        right: 80,
+        right: 0,
         width: 50,
         height: 50,
     },

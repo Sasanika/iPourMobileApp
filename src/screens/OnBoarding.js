@@ -48,7 +48,8 @@ const OnBoarding = () => {
             >
                 <View style={styles.card}>
                     <Text style={styles.title}>Join the iPour community and discover a new world of brewing possibilities.</Text>
-                    <TextInput 
+                    <TextInput
+                        selectionColor="white" 
                         value={username} 
                         onChangeText={(text) => setUsername(text)} 
                         placeholder="Username" 
@@ -57,6 +58,7 @@ const OnBoarding = () => {
                     />
                     <TextInput 
                         value={password} 
+                        selectionColor="white" 
                         onChangeText={(text) => setPassword(text)} 
                         placeholder="Password" 
                         placeholderTextColor="white" 
@@ -120,6 +122,7 @@ const styles = StyleSheet.create({
       backgroundColor: 'transparent',
       borderColor:'white',
       borderWidth: 1,
+      color: 'white',
     },
     button: {
         backgroundColor: '#50B8E7',

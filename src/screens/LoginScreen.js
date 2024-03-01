@@ -91,6 +91,7 @@ const LoginScreen = () => {
                         <Text style={styles.title}>Welcome Back !</Text>
 
                         <TextInput
+                            selectionColor="white"
                             value={username}
                             onChangeText={(text) => setUsername(text)}
                             placeholder="Username"
@@ -99,6 +100,7 @@ const LoginScreen = () => {
                         />
 
                         <TextInput
+                            selectionColor="white"
                             value={password}
                             onChangeText={(text) => setPassword(text)}
                             placeholder="Password"
@@ -174,6 +176,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
         borderColor:'white',
         borderWidth: 1,
+        color: 'white',
     },
     button: {
         backgroundColor: '#50B8E7',

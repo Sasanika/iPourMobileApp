@@ -250,7 +250,7 @@ bottomRightImage3: {
   },
   input: {
     width: '90%',
-
+color:'white',
         fontSize: 20,
         padding: 15,        
         borderRadius: 10,

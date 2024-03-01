@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "TestingThings",
-    "slug": "TestingThings",
+    "name": "iPour",
+    "slug": "iPour",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -19,12 +19,18 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.sasa2000.TestingThings"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "925a3439-e7c0-4e8b-ba2e-f7d72d882909"
+      }
     }
   }
 }
